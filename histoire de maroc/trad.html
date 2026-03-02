@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Traditions - Dar Al-Thaqafa</title>
+    <style>
+      :root {
+        --primary-clay: #bc6c25; /* Warm terracotta tone */
+        --accent-gold: #d4a373;
+        --text-light: #fefae0;
+        --bg-dark: #1a1614; /* Slightly warmer dark background */
+      }
+
+      body {
+        margin: 0;
+        font-family: "Georgia", serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 80px 5% 40px 5%;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        margin: 0;
+        color: var(--accent-gold);
+        letter-spacing: 2px;
+        font-style: italic;
+      }
+
+      .subtitle {
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        opacity: 0.7;
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+
+      /* Row Layout */
+      .tradition-section {
+        display: flex;
+        align-items: center;
+        min-height: 85vh;
+        width: 100%;
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+      }
+
+      .tradition-section:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .image-container {
+        flex: 1.2;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: sepia(20%) contrast(110%);
+        transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .tradition-section:hover img {
+        transform: scale(1.1);
+      }
+
+      .content-box {
+        flex: 1;
+        padding: 5% 8%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .tradition-tag {
+        color: var(--primary-clay);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      .tradition-title {
+        font-size: 4rem;
+        margin: 0 0 25px 0;
+        line-height: 1.1;
+        font-weight: normal;
+      }
+
+      .tradition-desc {
+        font-size: 1.15rem;
+        line-height: 1.9;
+        margin-bottom: 40px;
+        color: #e0d5c0;
+      }
+
+      .btn-immerse {
+        align-self: flex-start;
+        padding: 15px 35px;
+        border: 1px solid var(--accent-gold);
+        color: var(--accent-gold);
+        text-decoration: none;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+      }
+
+      .btn-immerse:hover {
+        background: var(--accent-gold);
+        color: #fff;
+        letter-spacing: 5px;
+      }
+
+      @media (max-width: 1024px) {
+        .tradition-section,
+        .tradition-section:nth-child(even) {
+          flex-direction: column;
+        }
+        .image-container {
+          height: 50vh;
+          width: 100%;
+        }
+        .tradition-title {
+          font-size: 2.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p class="subtitle">Heritage & Artistry</p>
+      <h1>Discover Our Traditions</h1>
+    </header>
+
+    <section class="tradition-section">
+      <div class="image-container">
+        <img
+          src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=1200"
+          alt="Tajine and Couscous"
+        />
+      </div>
+      <div class="content-box">
+        <span class="tradition-tag">Culinary Arts</span>
+        <h2 class="tradition-title">The Art of the Tajine</h2>
+        <p class="tradition-desc">
+          More than just a meal, the slow-braised Tajine is a symbol of Moroccan
+          hospitality. Layered with aromatic spices, preserved lemons, and
+          olives, it represents centuries of culinary refinement passed down
+          through generations of families gathering around the table.
+        </p>
+        <a
+          href="https://moroccanfoodtour.com/10-moroccan-tajines-you-absolutely-have-to-try/"
+          class="btn-immerse"
+          >Taste the History</a
+        >
+      </div>
+    </section>
+
+    <section class="tradition-section">
+      <div class="image-container">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/5c5f155e3560c3132c3710e4/1570051904136-NOS2QUASNWGMPQQ459M9/SHENEQUA-Brown+Sugar-detail+1.jpg?format=1500w"
+          alt="Hand-woven Carpets"
+        />
+      </div>
+      <div class="content-box">
+        <span class="tradition-tag">Craftsmanship</span>
+        <h2 class="tradition-title">Woven Narratives</h2>
+        <p class="tradition-desc">
+          Every knot in a Moroccan Berber carpet is a syllable in a story.
+          Hand-woven by women in the Atlas Mountains, these textiles feature
+          ancient geometric symbols that tell tales of protection, nature, and
+          the weaver's own journey through life.
+        </p>
+        <a
+          href="https://www.lamaisonmusee.com/2025/10/moroccan-textile-and-weaving-museums.html"
+          class="btn-immerse"
+          >Explore the Loom</a
+        >
+      </div>
+    </section>
+
+    <section class="tradition-section">
+      <div class="image-container">
+        <img
+          src="https://sandhurst.kent.sch.uk/wp-content/uploads/2023/06/Art-Y4-6.png"
+          alt="Zellige Art"
+        />
+      </div>
+      <div class="content-box">
+        <span class="tradition-tag">Architecture</span>
+        <h2 class="tradition-title">The Geometry of Zellige</h2>
+        <p class="tradition-desc">
+          Zellige is the hallmark of Moroccan architecture. These hand-cut
+          terracotta tiles are arranged in complex mathematical patterns,
+          reflecting a pursuit of perfection and infinite beauty that graces our
+          palaces, mosques, and riads.
+        </p>
+        <a href="https://zlligetiles.com/" class="btn-immerse"
+          >View the Patterns</a
+        >
+      </div>
+    </section>
+  </body>
+</html>

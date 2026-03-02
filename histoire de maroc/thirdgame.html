@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>لغز الزليج المغربي | Zellige Puzzle</title>
+    <style>
+      :root {
+        --moroccan-blue: #0047ab;
+        --sand: #f5f5dc;
+        --gold: #d4af37;
+      }
+
+      body {
+        background: radial-gradient(circle, #ffffff, #e6d5c3);
+        font-family: "Segoe UI", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        color: var(--moroccan-blue);
+        margin-bottom: 20px;
+      }
+
+      /* منطقة اللعب */
+      #puzzle-board {
+        display: grid;
+        gap: 2px;
+        background: #ccc;
+        border: 10px solid var(--moroccan-blue);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .slot {
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* قطع الزليج */
+      .tile {
+        cursor: grab;
+        background-image: url("https://img.freepik.com/free-vector/arabic-pattern-design_1110-388.jpg"); /* نمط زليج افتراضي */
+        background-size: 400px 400px;
+        transition: transform 0.2s;
+      }
+
+      .tile:active {
+        cursor: grabbing;
+        transform: scale(0.95);
+      }
+
+      /* منطقة القطع المبعثرة */
+      #pieces-container {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        max-width: 600px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 15px;
+      }
+
+      .info {
+        margin-top: 15px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      .win-message {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        z-index: 100;
+        border: 5px solid var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>سيد الزليج (Zellige Master)</h1>
+      <p>أعد بناء اللوحة الهندسية لتكتشف جمال العمارة المغربية.</p>
+    </div>
+
+    <div id="game-info" class="info">
+      المستوى: <span id="level-num">1</span>
+    </div>
+
+    <div id="puzzle-board"></div>
+
+    <div id="pieces-container"></div>
+
+    <div id="win-message" class="win-message">
+      <h2 style="color: var(--moroccan-blue)">عمل رائع! ✨</h2>
+      <p id="fact-text"></p>
+      <button
+        onclick="nextLevel()"
+        style="
+          padding: 10px 20px;
+          cursor: pointer;
+          background: var(--moroccan-blue);
+          color: white;
+          border: none;
+          border-radius: 5px;
+        "
+      >
+        المستوى التالي
+      </button>
+    </div>
+
+    <script>
+      let level = 1;
+      let correctPieces = 0;
+      const board = document.getElementById("puzzle-board");
+      const container = document.getElementById("pieces-container");
+      const facts = [
+        "هذا النمط يسمى 'النجمة الفاسية'، وهو رمز للأناقة في القصور المغربية.",
+        "الزليج المغربي يعتمد على الهندسة الدقيقة التي ترمز لللانهاية.",
+        "هل تعلم أن كل قطعة زليج تُنحت يدوياً قبل تركيبها في مكانها؟",
+      ];
+
+      function initLevel() {
+        board.innerHTML = "";
+        container.innerHTML = "";
+        correctPieces = 0;
+
+        // حساب عدد المربعات (المستوى 1: 2x2، المستوى 2: 3x3، المستوى 3: 4x4)
+        const size = level + 1;
+        const totalTiles = size * size;
+        const tileSize = 300 / size; // حجم القطعة الواحدة ثابت لسهولة العرض
+
+        board.style.gridTemplateColumns = `repeat(${size}, ${tileSize}px)`;
+
+        let tiles = [];
+
+        for (let i = 0; i < totalTiles; i++) {
+          // إنشاء المكان (Slot)
+          const slot = document.createElement("div");
+          slot.className = "slot";
+          slot.style.width = `${tileSize}px`;
+          slot.style.height = `${tileSize}px`;
+          slot.dataset.index = i;
+          slot.ondragover = (e) => e.preventDefault();
+          slot.ondrop = handleDrop;
+          board.appendChild(slot);
+
+          // إنشاء القطعة (Tile)
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.id = `tile-${i}`;
+          tile.draggable = true;
+          tile.style.width = `${tileSize - 2}px`;
+          tile.style.height = `${tileSize - 2}px`;
+
+          // حساب مكان الصورة في الخلفية
+          const row = Math.floor(i / size);
+          const col = i % size;
+          tile.style.backgroundPosition = `-${col * (400 / size)}px -${row * (400 / size)}px`;
+          tile.style.backgroundSize = `400px 400px`;
+
+          tile.ondragstart = (e) => e.dataTransfer.setData("text", i);
+          tiles.push(tile);
+        }
+
+        // مبعثرة القطع عشوائياً
+        tiles
+          .sort(() => Math.random() - 0.5)
+          .forEach((t) => container.appendChild(t));
+        document.getElementById("level-num").innerText = level;
+      }
+
+      function handleDrop(e) {
+        e.preventDefault();
+        const tileIndex = e.dataTransfer.getData("text");
+        const slotIndex = this.dataset.index;
+
+        if (tileIndex === slotIndex && !this.hasChildNodes()) {
+          const tile = document.getElementById(`tile-${tileIndex}`);
+          this.appendChild(tile);
+          tile.draggable = false;
+          correctPieces++;
+
+          if (correctPieces === Math.pow(level + 1, 2)) {
+            showWin();
+          }
+        }
+      }
+
+      function showWin() {
+        const msg = document.getElementById("win-message");
+        document.getElementById("fact-text").innerText =
+          facts[level - 1] || "أنت فنان حقيقي!";
+        msg.style.display = "block";
+      }
+
+      function nextLevel() {
+        level++;
+        document.getElementById("win-message").style.display = "none";
+        initLevel();
+      }
+
+      initLevel();
+    </script>
+  </body>
+</html>

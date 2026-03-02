@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Our Cities - Dar Al-Thaqafa</title>
+    <style>
+      :root {
+        --primary-green: #1b4332;
+        --accent-gold: #d4a373;
+        --text-light: #fefae0;
+        --bg-dark: #0b1a14;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Georgia", serif;
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        overflow-x: hidden;
+      }
+
+      /* Header Styling */
+      header {
+        padding: 60px 5%;
+        text-align: center;
+        border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        margin: 0;
+        color: var(--accent-gold);
+        letter-spacing: 2px;
+      }
+
+      .subtitle {
+        font-style: italic;
+        opacity: 0.8;
+        font-size: 1.2rem;
+      }
+
+      /* Row Layout */
+      .city-section {
+        display: flex;
+        align-items: center;
+        min-height: 80vh;
+        width: 100%;
+        border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+      }
+
+      /* Flips every second row */
+      .city-section:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .city-image-container {
+        flex: 1.2;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .city-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s ease;
+      }
+
+      .city-section:hover img {
+        transform: scale(1.05);
+      }
+
+      .city-content {
+        flex: 1;
+        padding: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .city-tag {
+        color: var(--accent-gold);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .city-name {
+        font-size: 4rem;
+        margin: 0 0 20px 0;
+        line-height: 1;
+      }
+
+      .city-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        opacity: 0.9;
+      }
+
+      .explore-btn {
+        align-self: flex-start;
+        padding: 12px 30px;
+        border: 1px solid var(--accent-gold);
+        color: var(--accent-gold);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+      }
+
+      .explore-btn:hover {
+        background: var(--accent-gold);
+        color: var(--bg-dark);
+      }
+
+      /* Mobile Optimization */
+      @media (max-width: 900px) {
+        .city-section,
+        .city-section:nth-child(even) {
+          flex-direction: column;
+        }
+        .city-content {
+          padding: 40px 5%;
+        }
+        .city-name {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Our Lands</h1>
+      <p class="subtitle">A journey through the heart of the Kingdom</p>
+    </header>
+
+    <section class="city-section">
+      <div class="city-image-container">
+        <img
+          src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=1200"
+          alt="Tiznit"
+        />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Silver City</span>
+        <h2 class="city-name">Tiznit</h2>
+        <p class="city-description">
+          Famed for its silver jewelry and ancient ramparts, Tiznit offers a
+          quiet, authentic look at Moroccan craftsmanship. The city's red-walled
+          medina is a labyrinth of tradition where every piece of silver tells a
+          story of Berber heritage.
+        </p>
+        <a href="https://en.wikipedia.org/wiki/Tiznit" class="explore-btn"
+          >Discover More</a
+        >
+      </div>
+    </section>
+
+    <section class="city-section">
+      <div class="city-image-container">
+        <img
+          src="https://i.pinimg.com/originals/68/6f/24/686f246e00d76aaf117d073e1d39a21d.jpg"
+          alt="Chefchaouen"
+        />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Blue Pearl</span>
+        <h2 class="city-name">Chefchaouen</h2>
+        <p class="city-description">
+          Hidden within the Rif Mountains, Chefchaouen is a dreamscape of
+          blue-washed alleys and white-washed houses. It's a serene escape where
+          the air is fresh, the mountains are vast, and every corner is a
+          photographer's dream.
+        </p>
+        <a href="https://en.wikipedia.org/wiki/Chefchaouen" class="explore-btn"
+          >Discover More</a
+        >
+      </div>
+    </section>
+
+    <section class="city-section">
+      <div class="city-image-container">
+        <img
+          src="https://media.istockphoto.com/photos/berber-camp-picture-id182251293?k=20&m=182251293&s=612x612&w=0&h=tI4r6nPvByRxC_wLIecqsj_Lu1tIL3ndl5kBYM1AjUM="
+          alt="Merzouga"
+        />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Sahara Gate</span>
+        <h2 class="city-name">Merzouga</h2>
+        <p class="city-description">
+          Where the road ends and the dunes of Erg Chebbi begin. Merzouga is the
+          gateway to the Sahara, offering golden sunrises, camel treks across
+          rolling sands, and nights spent under a blanket of infinite stars.
+        </p>
+        <a href="https://en.wikipedia.org/wiki/Merzouga" class="explore-btn"
+          >Discover More</a
+        >
+      </div>
+    </section>
+  </body>
+</html>

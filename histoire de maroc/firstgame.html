@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Zellige Master | لغز الزليج الملكي</title>
+    <style>
+      :root {
+        --moroccan-blue: #0047ab;
+        --clay-red: #e2725b;
+        --gold: #d4af37;
+        --sand: #f5f5dc;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(circle, #fdfcfb 0%, #e2d1c3 100%);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      header {
+        text-align: center;
+        padding: 20px;
+        color: var(--moroccan-blue);
+      }
+
+      h1 {
+        font-style: italic;
+        letter-spacing: 2px;
+      }
+
+      /* The Game Board */
+      #game-container {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.3);
+        border: 8px solid var(--clay-red);
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      }
+
+      .slot {
+        width: 133px;
+        height: 133px;
+        border: 1px dashed rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .tile {
+        width: 130px;
+        height: 130px;
+        cursor: grab;
+        position: absolute;
+        background-image: url("https://img.freepik.com/free-vector/arabic-pattern-design_1110-388.jpg"); /* Representative Zellige pattern */
+        background-size: 400px 400px;
+        border-radius: 5px;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        z-index: 10;
+      }
+
+      .tile:active {
+        cursor: grabbing;
+        transform: scale(1.05);
+      }
+
+      /* Pieces Area */
+      #pieces-area {
+        margin-top: 40px;
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50px;
+      }
+
+      /* Success Modal */
+      #success-info {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        max-width: 400px;
+        border: 4px solid var(--gold);
+      }
+
+      button {
+        background: var(--moroccan-blue);
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>The Zellige Master</h1>
+      <p>
+        Restore the fountain of Fes. Drag the tiles to their rightful place.
+      </p>
+    </header>
+
+    <div id="game-container">
+      <div class="slot" data-index="0"></div>
+      <div class="slot" data-index="1"></div>
+      <div class="slot" data-index="2"></div>
+      <div class="slot" data-index="3"></div>
+      <div class="slot" data-index="4"></div>
+      <div class="slot" data-index="5"></div>
+      <div class="slot" data-index="6"></div>
+      <div class="slot" data-index="7"></div>
+      <div class="slot" data-index="8"></div>
+    </div>
+
+    <div id="pieces-area"></div>
+
+    <div id="success-info">
+      <h2 style="color: var(--moroccan-blue)">Magnificent! ✨</h2>
+      <p>
+        You have restored a 14th-century <b>Fassi Pattern</b>. These geometric
+        stars represent infinity and the complex beauty of Moroccan
+        architecture.
+      </p>
+      <p>
+        <i>Visit the Bou Inania Madrasa in Fez to see this in real life!</i>
+      </p>
+      <button onclick="location.reload()">Play Another Pattern</button>
+    </div>
+
+    <audio
+      id="click-sound"
+      src="https://www.soundjay.com/buttons/sounds/button-20.mp3"
+    ></audio>
+
+    <script>
+      const piecesArea = document.getElementById("pieces-area");
+      const slots = document.querySelectorAll(".slot");
+      const clickSound = document.getElementById("click-sound");
+      let correctTiles = 0;
+
+      // Create 9 tiles with different background positions
+      const positions = [
+        { x: 0, y: 0 },
+        { x: -133, y: 0 },
+        { x: -266, y: 0 },
+        { x: 0, y: -133 },
+        { x: -133, y: -133 },
+        { x: -266, y: -133 },
+        { x: 0, y: -266 },
+        { x: -133, y: -266 },
+        { x: -266, y: -266 },
+      ];
+
+      // Shuffle tiles
+      const shuffledIndices = [0, 1, 2, 3, 4, 5, 6, 7, 8].sort(
+        () => Math.random() - 0.5,
+      );
+
+      shuffledIndices.forEach((index) => {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.draggable = true;
+        tile.id = `tile-${index}`;
+        tile.style.backgroundPosition = `${positions[index].x}px ${positions[index].y}px`;
+
+        tile.addEventListener("dragstart", (e) => {
+          e.dataTransfer.setData("text/plain", index);
+        });
+
+        piecesArea.appendChild(tile);
+      });
+
+      // Handle Drop Logic
+      slots.forEach((slot) => {
+        slot.addEventListener("dragover", (e) => e.preventDefault());
+
+        slot.addEventListener("drop", (e) => {
+          e.preventDefault();
+          const tileIndex = e.dataTransfer.getData("text/plain");
+          const slotIndex = slot.getAttribute("data-index");
+
+          if (tileIndex === slotIndex && !slot.hasChildNodes()) {
+            const tile = document.getElementById(`tile-${tileIndex}`);
+            slot.appendChild(tile);
+            tile.draggable = false;
+            tile.style.position = "static";
+
+            // Play sound
+            clickSound.play();
+
+            correctTiles++;
+            checkWin();
+          }
+        });
+      });
+
+      function checkWin() {
+        if (correctTiles === 9) {
+          setTimeout(() => {
+            document.getElementById("success-info").style.display = "block";
+            document.getElementById("game-container").style.boxShadow =
+              "0 0 50px gold";
+          }, 500);
+        }
+      }
+    </script>
+  </body>
+</html>

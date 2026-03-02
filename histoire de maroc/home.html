@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dar Al-Thaqafa — Moroccan Cultural Hub</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --terracotta: #e2725b;
+        --teal: #006a4e;
+        --sand: #f4a460;
+        --cream: #fbf5ec;
+        --dark: #1a0f0a;
+        --light-teal: #0a9070;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--cream);
+        color: var(--dark);
+        overflow-x: hidden;
+      }
+
+      /* Grain texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 200px 200px;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 48px;
+        background: transparent;
+        transition: background 0.4s;
+      }
+      nav.scrolled {
+        background: rgba(251, 245, 236, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(226, 114, 91, 0.15);
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--teal);
+        letter-spacing: 0.04em;
+      }
+      .nav-logo span {
+        color: var(--terracotta);
+      }
+      .nav-links {
+        display: flex;
+        gap: 36px;
+        list-style: none;
+        align-items: center;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dark);
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover {
+        opacity: 1;
+      }
+      .btn-about {
+        background: transparent;
+        border: 1.5px solid var(--terracotta);
+        color: var(--terracotta) !important;
+        padding: 8px 22px;
+        border-radius: 50px;
+        font-size: 0.75rem !important;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        transition:
+          background 0.25s,
+          color 0.25s !important;
+        opacity: 1 !important;
+      }
+      .btn-about:hover {
+        background: var(--terracotta) !important;
+        color: #fff !important;
+      }
+
+      /* ─── HERO ─── */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: stretch;
+        padding: 80px 48px 0;
+        gap: 20px;
+      }
+
+      .hero-card {
+        flex: 1;
+        border-radius: 24px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition:
+          flex 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          filter 0.4s;
+        min-height: 78vh;
+      }
+      .hero-card:hover {
+        flex: 1.18;
+        filter: brightness(1.06);
+      }
+
+      /* Card 1 — Country */
+      .card-country {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(0, 106, 78, 0.6) 0%,
+            rgba(26, 15, 10, 0.75) 100%
+          ),
+          url("https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=1200&q=80")
+            center/cover no-repeat;
+      }
+
+      /* Zellige SVG pattern for card 2 */
+      .card-culture {
+        background:
+          linear-gradient(
+            160deg,
+            rgba(226, 114, 91, 0.55) 0%,
+            rgba(26, 15, 10, 0.8) 100%
+          ),
+          url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80")
+            center/cover no-repeat;
+      }
+
+      /* Zellige overlay */
+      .card-culture::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 15L60 45L30 60L0 45L0 15Z' fill='none' stroke='rgba(244,164,96,0.12)' stroke-width='1'/%3E%3Cpath d='M30 10L50 20L50 40L30 50L10 40L10 20Z' fill='none' stroke='rgba(244,164,96,0.1)' stroke-width='0.5'/%3E%3C/svg%3E");
+        background-size: 60px 60px;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Arch overlay on card 1 */
+      .card-country::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 65%;
+        border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+        border: 2px solid rgba(244, 164, 96, 0.2);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .card-inner {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 44px 40px;
+      }
+
+      .card-tag {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--sand);
+        border: 1px solid rgba(244, 164, 96, 0.45);
+        border-radius: 40px;
+        padding: 5px 14px;
+        margin-bottom: 16px;
+        backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      .card-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 3.2vw, 3rem);
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.15;
+        margin-bottom: 20px;
+      }
+      .card-title em {
+        font-style: italic;
+        color: var(--sand);
+      }
+
+      .card-desc {
+        font-size: 0.82rem;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1.8;
+        max-width: 340px;
+        margin-bottom: 28px;
+      }
+
+      .card-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 30px;
+      }
+      .pill {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        padding: 6px 16px;
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: 0.05em;
+        transition:
+          background 0.25s,
+          border 0.25s;
+      }
+      .pill:hover {
+        background: rgba(244, 164, 96, 0.25);
+        border-color: var(--sand);
+      }
+
+      .card-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--sand);
+        text-decoration: none;
+        transition: gap 0.25s;
+      }
+      .card-cta:hover {
+        gap: 18px;
+      }
+      .card-cta::after {
+        content: "→";
+        font-size: 1rem;
+      }
+
+      /* ─── FOOTER GAMES ─── */
+      footer {
+        padding: 36px 48px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        background: transparent;
+      }
+
+      .footer-label {
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--teal);
+        opacity: 0.7;
+      }
+
+      .games-row {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .game-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--dark);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .game-btn:hover {
+        transform: translateY(-6px);
+      }
+
+      .game-circle {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .game-btn:hover .game-circle {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      }
+      .game-circle::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+      .game-btn:hover .game-circle::after {
+        opacity: 1;
+      }
+
+      .gc-1 {
+        background: linear-gradient(135deg, var(--teal), #00917c);
+      }
+      .gc-2 {
+        background: linear-gradient(135deg, var(--terracotta), #c95a43);
+      }
+      .gc-3 {
+        background: linear-gradient(135deg, var(--sand), #d4813a);
+      }
+      .gc-4 {
+        background: linear-gradient(135deg, #7b4f2e, #a6623a);
+      }
+      .gc-5 {
+        background: linear-gradient(135deg, #3d6e70, #005f50);
+      }
+
+      .game-name {
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-align: center;
+        opacity: 0.75;
+        text-transform: uppercase;
+      }
+
+      .footer-line {
+        width: 100%;
+        max-width: 700px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 106, 78, 0.25),
+          transparent
+        );
+        margin-top: 4px;
+      }
+
+      .footer-copy {
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        opacity: 0.4;
+        text-transform: uppercase;
+      }
+
+      /* ─── HERO ENTER ANIMATION ─── */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(32px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero-card {
+        animation: slideUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      }
+      .hero-card:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      nav {
+        animation: slideUp 0.6s ease both;
+      }
+
+      /* Decorative number */
+      .card-num {
+        position: absolute;
+        top: 28px;
+        right: 28px;
+        font-family: "Playfair Display", serif;
+        font-size: 5rem;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.06);
+        line-height: 1;
+        pointer-events: none;
+        z-index: 2;
+        user-select: none;
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (max-width: 768px) {
+        nav {
+          padding: 20px 24px;
+        }
+        .nav-links li:not(:last-child) {
+          display: none;
+        }
+        .hero {
+          flex-direction: column;
+          height: auto;
+          padding: 72px 20px 0;
+          gap: 14px;
+        }
+        .hero-card {
+          min-height: 55vh;
+        }
+        .hero-card:hover {
+          flex: 1;
+        }
+        .card-inner {
+          padding: 30px 24px;
+        }
+        footer {
+          padding: 28px 20px 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav id="navbar">
+      <div class="nav-logo">Dar<span>.</span>Al-Thaqafa</div>
+      <ul class="nav-links">
+        <li><a href="#" class="btn-about">About Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <!-- Card 1: Country -->
+      <div class="hero-card card-country">
+        <span class="card-num">01</span>
+        <div class="card-inner">
+          <span class="card-tag">Our Country</span>
+          <h2 class="card-title">Explore<br /><em>Our Lands</em></h2>
+          <p class="card-desc">
+            From the silver alleys of
+            <strong style="color: #fff">Tiznit</strong> to the blue-washed
+            dreamscape of <strong style="color: #fff">Chefchaouen</strong> —
+            Morocco's landscapes are a tapestry of wonder.
+          </p>
+          <div class="card-pills">
+            <span class="pill">🌊 Tiznit — The Silver City</span>
+            <span class="pill">💙 Chefchaouen</span>
+            <span class="pill">🏔 Atlas Mountains</span>
+            <span class="pill">🌅 Sahara Dunes</span>
+          </div>
+          <a href="meddina.html" class="card-cta">Begin Journey</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Culture -->
+      <div class="hero-card card-culture">
+        <span class="card-num">02</span>
+        <div class="card-inner">
+          <span class="card-tag">Our Culture</span>
+          <h2 class="card-title">Discover<br /><em>Our Traditions</em></h2>
+          <p class="card-desc">
+            Slow-braised <strong style="color: #fff">Tajine</strong>, Friday's
+            sacred <strong style="color: #fff">Couscous</strong>, and the
+            intricate geometry of
+            <strong style="color: #fff">hand-woven carpets</strong> — heritage
+            woven into every thread of daily life.
+          </p>
+          <div class="card-pills">
+            <span class="pill">🫕 Tajine</span>
+            <span class="pill">🍚 Couscous</span>
+            <span class="pill">🧶 Hand-woven Carpets</span>
+            <span class="pill">🎨 Zellige Art</span>
+          </div>
+          <a href="trad.html" class="card-cta">Immerse Yourself</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-label">Interactive Experiences</span>
+      <div class="games-row">
+        <a href="firstgame.html" class="game-btn">
+          <div class="game-circle gc-1">🧩</div>
+          <span class="game-name">Zellige Puzzle</span>
+        </a>
+        <a href="secondgame.html" class="game-btn">
+          <div class="game-circle gc-2">🏺</div>
+          <span class="game-name">Artisan Quest</span>
+        </a>
+      </div>
+      <div class="footer-line"></div>
+      <span class="footer-copy"
+        >© 2026 Dar Al-Thaqafa — Moroccan Cultural Hub</span
+      >
+    </footer>
+
+    <script>
+      //   const nav = document.getElementById("navbar");
+      //   window.addEventListener("scroll", () => {
+      //     nav.classList.toggle("scrolled", window.scrollY > 20);
+      //   });
+    </script>
+  </body>
+</html>
