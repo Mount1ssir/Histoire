@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safi — The Pottery Capital | Dar Al-Thaqafa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg-dark: #0d1410;
+        --clay:    #c4622d;
+        --gold:    #d4a373;
+        --cream:   #fefae0;
+        --teal:    #1b4332;
+        --light:   rgba(254,250,224,0.85);
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: "Jost", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--cream);
+        overflow-x: hidden;
+      }
+
+      /* Grain texture */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+      }
+
+      /* ── BACK NAV ── */
+      .back-nav {
+        position: fixed;
+        top: 30px;
+        left: 44px;
+        z-index: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--gold);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        transition: opacity 0.3s, gap 0.3s;
+      }
+      .back-nav:hover { opacity: 1; gap: 16px; }
+      .back-nav::before { content: "←"; font-size: 0.95rem; }
+
+      /* ── HERO ── */
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+      }
+
+      .hero-img {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(13,20,16,0.92) 0%, rgba(13,20,16,0.35) 55%, rgba(13,20,16,0.1) 100%),
+          url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Safi_Morocco.jpg/1200px-Safi_Morocco.jpg") center/cover no-repeat;
+        transform: scale(1.04);
+        transition: transform 8s ease;
+      }
+
+      .hero-img.loaded { transform: scale(1); }
+
+      /* Moroccan arch decorative ring */
+      .hero-arch {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        border: 1px solid rgba(212,163,115,0.1);
+        pointer-events: none;
+      }
+      .hero-arch::before {
+        content: "";
+        position: absolute;
+        inset: 30px;
+        border-radius: 50%;
+        border: 1px solid rgba(212,163,115,0.07);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        padding: 0 10% 80px;
+        max-width: 800px;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid rgba(212,163,115,0.4);
+        padding: 6px 18px;
+        border-radius: 40px;
+        margin-bottom: 22px;
+        backdrop-filter: blur(6px);
+        background: rgba(0,0,0,0.2);
+      }
+
+      .hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.5rem, 8vw, 7rem);
+        font-weight: 300;
+        line-height: 1.05;
+        color: #fff;
+        margin-bottom: 24px;
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-tagline {
+        font-size: 1rem;
+        font-weight: 300;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.8;
+        max-width: 460px;
+        letter-spacing: 0.03em;
+      }
+
+      .hero-scroll {
+        position: absolute;
+        bottom: 36px;
+        right: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.62rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.4);
+        z-index: 10;
+      }
+      .hero-scroll::after {
+        content: "";
+        width: 1px;
+        height: 50px;
+        background: linear-gradient(to bottom, rgba(212,163,115,0.5), transparent);
+        animation: scrollLine 2s ease-in-out infinite;
+      }
+      @keyframes scrollLine {
+        0%,100% { opacity: 0.4; transform: scaleY(1); transform-origin: top; }
+        50% { opacity: 1; transform: scaleY(0.6); }
+      }
+
+      /* ── SECTION SHARED ── */
+      .section {
+        padding: 120px 10%;
+        border-bottom: 1px solid rgba(212,163,115,0.08);
+      }
+
+      .section-label {
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        font-weight: 400;
+        color: #fff;
+        line-height: 1.15;
+        margin-bottom: 30px;
+      }
+
+      .section-title em { color: var(--gold); font-style: italic; }
+
+      .section-body {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 2;
+        color: rgba(254,250,224,0.8);
+        max-width: 640px;
+      }
+
+      /* ── HISTORY SECTION ── */
+      .history-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .history-image {
+        position: relative;
+        height: 600px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .history-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: sepia(15%) contrast(110%);
+        transition: transform 1.2s ease;
+      }
+
+      .history-image:hover img { transform: scale(1.06); }
+
+      /* Decorative frame */
+      .history-image::before {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border: 1px solid rgba(212,163,115,0.2);
+        border-radius: 2px;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .history-image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 24px;
+        background: linear-gradient(to top, rgba(13,20,16,0.9), transparent);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        color: rgba(212,163,115,0.8);
+        text-transform: uppercase;
+        z-index: 3;
+      }
+
+      /* ── POTTERY SECTION ── */
+      .pottery-section {
+        background: linear-gradient(135deg, rgba(196,98,45,0.08) 0%, transparent 60%);
+      }
+
+      .pottery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        margin-top: 60px;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .pottery-cell {
+        position: relative;
+        height: 320px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .pottery-cell:first-child {
+        grid-column: span 2;
+        height: 420px;
+      }
+
+      .pottery-cell img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: contrast(108%) saturate(115%);
+        transition: transform 0.9s ease;
+      }
+
+      .pottery-cell:hover img { transform: scale(1.08); }
+
+      .pottery-cell-label {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 30px 24px 20px;
+        background: linear-gradient(to top, rgba(13,20,16,0.85), transparent);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.4rem;
+        font-style: italic;
+        color: var(--gold);
+        z-index: 2;
+      }
+
+      /* ── FACTS STRIP ── */
+      .facts-strip {
+        padding: 80px 10%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        border-bottom: 1px solid rgba(212,163,115,0.08);
+      }
+
+      .fact-item {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 30px;
+        border: 1px solid rgba(212,163,115,0.12);
+        border-radius: 4px;
+        position: relative;
+        transition: border-color 0.3s, background 0.3s;
+        background: rgba(255,255,255,0.015);
+      }
+
+      .fact-item:hover {
+        border-color: rgba(212,163,115,0.3);
+        background: rgba(212,163,115,0.04);
+      }
+
+      .fact-icon { font-size: 1.8rem; margin-bottom: 6px; }
+
+      .fact-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+      }
+
+      .fact-label {
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: rgba(254,250,224,0.6);
+        text-transform: uppercase;
+        line-height: 1.5;
+      }
+
+      /* ── LANDMARKS ── */
+      .landmarks-section { background: linear-gradient(to bottom, transparent, rgba(27,67,50,0.06)); }
+
+      .landmarks-grid {
+        margin-top: 60px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: rgba(212,163,115,0.08);
+        border: 1px solid rgba(212,163,115,0.08);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .landmark-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-dark);
+        transition: background 0.3s;
+        overflow: hidden;
+      }
+
+      .landmark-card:hover { background: rgba(212,163,115,0.04); }
+
+      .landmark-card-img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+        display: block;
+        filter: contrast(105%) saturate(108%);
+        transition: transform 0.9s ease;
+      }
+
+      .landmark-card:hover .landmark-card-img { transform: scale(1.05); }
+
+      .landmark-card-body {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        padding: 28px 40px 40px;
+      }
+
+      .landmark-number {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3.5rem;
+        font-weight: 300;
+        color: rgba(212,163,115,0.2);
+        line-height: 1;
+        flex-shrink: 0;
+        width: 48px;
+      }
+
+
+      .landmark-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #fff;
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+
+      .landmark-desc {
+        font-size: 0.88rem;
+        font-weight: 300;
+        line-height: 1.9;
+        color: rgba(254,250,224,0.65);
+      }
+
+      /* ── QUOTE BLOCK ── */
+      .quote-section {
+        padding: 120px 10%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quote-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(212,163,115,0.05)' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='rgba(212,163,115,0.04)' stroke-width='0.5'/%3E%3C/svg%3E");
+        background-size: 100px 100px;
+      }
+
+      .quote-mark {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 8rem;
+        color: rgba(212,163,115,0.12);
+        line-height: 0.5;
+        margin-bottom: 30px;
+        display: block;
+        position: relative;
+      }
+
+      blockquote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-style: italic;
+        font-weight: 300;
+        color: var(--cream);
+        line-height: 1.6;
+        max-width: 760px;
+        margin: 0 auto 28px;
+        position: relative;
+      }
+
+      .quote-attr {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(212,163,115,0.6);
+      }
+
+      /* ── CUISINE ── */
+      .cuisine-layout {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .cuisine-list {
+        margin-top: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .cuisine-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgba(212,163,115,0.1);
+      }
+
+      .cuisine-item:last-child { border-bottom: none; }
+
+      .cuisine-emoji { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+
+      .cuisine-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.3rem;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+
+      .cuisine-desc {
+        font-size: 0.85rem;
+        font-weight: 300;
+        color: rgba(254,250,224,0.65);
+        line-height: 1.8;
+      }
+
+      .cuisine-image {
+        height: 400px;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .cuisine-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: contrast(108%) saturate(112%);
+        transition: transform 1s ease;
+      }
+      .cuisine-image:hover img { transform: scale(1.05); }
+
+      /* ── VISIT ── */
+      .visit-section {
+        padding: 100px 10%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        border-top: 1px solid rgba(212,163,115,0.1);
+      }
+
+
+      .visit-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.8rem;
+        font-weight: 300;
+        color: var(--gold);
+        margin-bottom: 36px;
+        line-height: 1.2;
+      }
+
+      .visit-item {
+        display: flex;
+        gap: 18px;
+        margin-bottom: 28px;
+        align-items: flex-start;
+      }
+
+      .visit-icon {
+        font-size: 1.4rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+
+      .visit-label {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 4px;
+      }
+
+      .visit-text {
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: rgba(254,250,224,0.75);
+        line-height: 1.7;
+      }
+
+      /* ── CTA ── */
+      .cta-section {
+        padding: 80px 10% 100px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .cta-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 40px;
+        border: 1px solid rgba(212,163,115,0.4);
+        color: var(--gold);
+        text-decoration: none;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        transition: all 0.35s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-back::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold);
+        transform: translateX(-101%);
+        transition: transform 0.35s ease;
+        z-index: -1;
+      }
+
+      .cta-back:hover { color: var(--bg-dark); }
+      .cta-back:hover::before { transform: translateX(0); }
+
+      .cta-note {
+        font-size: 0.75rem;
+        color: rgba(254,250,224,0.35);
+        letter-spacing: 0.1em;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 1024px) {
+        .history-layout,
+        .cuisine-layout,
+        .visit-section { grid-template-columns: 1fr; gap: 50px; }
+        .facts-strip { grid-template-columns: repeat(2, 1fr); }
+        .landmarks-grid { grid-template-columns: 1fr; }
+        .pottery-grid { grid-template-columns: 1fr 1fr; }
+        .pottery-cell:first-child { grid-column: span 2; }
+        .history-image,
+        .cuisine-image { height: 50vw; }
+      }
+
+      @media (max-width: 640px) {
+        .section { padding: 70px 6%; }
+        .facts-strip { grid-template-columns: repeat(2, 1fr); padding: 60px 6%; gap: 16px; }
+        .pottery-grid { grid-template-columns: 1fr; }
+        .pottery-cell:first-child { grid-column: span 1; }
+        .back-nav { left: 20px; }
+        .hero-content { padding: 0 6% 60px; }
+      }
+
+      /* ── FADE-IN ANIMATION ── */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .hero-content > * {
+        animation: fadeUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      }
+      .hero-tag       { animation-delay: 0.2s; }
+      .hero-title     { animation-delay: 0.4s; }
+      .hero-tagline   { animation-delay: 0.6s; }
+    </style>
+  </head>
+  <body>
+
+    <a href="meddina.html" class="back-nav">Our Lands</a>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+      <div class="hero-img" id="heroImg"></div>
+      <div class="hero-arch"></div>
+      <div class="hero-content">
+        <span class="hero-tag">Atlantic Coast · Morocco</span>
+        <h1 class="hero-title">Safi<br /><em>City of Potters</em></h1>
+        <p class="hero-tagline">
+          Where the Atlantic meets the oldest kilns in Morocco. Safi is a city
+          sculpted from earth, salt air, and centuries of artisan mastery.
+        </p>
+      </div>
+      <div class="hero-scroll">Scroll</div>
+    </section>
+  </head>
+  <body>
+
+    <a href="meddina.html" class="back-nav">Our Lands</a>
+
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+      <div class="hero-img" id="heroImg"></div>
+      <div class="hero-arch"></div>
+      <div class="hero-content">
+        <span class="hero-tag">Atlantic Coast · Morocco</span>
+        <h1 class="hero-title">Safi<br /><em>City of Potters</em></h1>
+        <p class="hero-tagline">
+          Where the Atlantic meets the oldest kilns in Morocco. Safi is a city
+          sculpted from earth, salt air, and centuries of artisan mastery.
+        </p>
+      </div>
+      <div class="hero-scroll">Scroll</div>
+    </section>
+
+    <!-- ══ FACTS STRIP ══ -->
+    <div class="facts-strip">
+      <div class="fact-item">
+        <span class="fact-icon">🏛️</span>
+        <span class="fact-num">16<sup style="font-size:1.2rem">th</sup></span>
+        <span class="fact-label">Century — when the Portuguese first fortified the city</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">🫙</span>
+        <span class="fact-num">500+</span>
+        <span class="fact-label">Master potters working in the Colline des Potiers today</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">🐟</span>
+        <span class="fact-num">#1</span>
+        <span class="fact-label">Sardine port in the world — Safi processes more sardines than anywhere on earth</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">🌊</span>
+        <span class="fact-num">3 m</span>
+        <span class="fact-label">Wave height at Safi's world-famous surf break "La Cathédrale"</span>
+      </div>
+    </div>
+
+    <!-- ══ HISTORY ══ -->
+    <section class="section history-section">
+      <div class="history-layout">
+        <div class="history-image">
+          <img
+            src="https://i.pinimg.com/736x/8b/68/7f/8b687fe4f2a56d25d1cf70b31394906a.jpg"
+            alt="Dar el Bahar — the Castle of the Sea, Safi"
+            onerror="this.src='https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?q=80&w=1200'"
+          />
+          <div class="history-image-caption">Dar el Bahar — Castle of the Sea, 16th century</div>
+        </div>
+        <div>
+          <span class="section-label">History</span>
+          <h2 class="section-title">A City<br />Shaped by <em>Tides & Time</em></h2>
+          <p class="section-body">
+            Long before European explorers charted the Atlantic, Safi was a prosperous
+            Phoenician and Amazigh settlement, its natural harbour drawing traders from
+            across the Mediterranean. In the 16th century, the Portuguese seized it and
+            left behind the imposing <strong style="color:#fff">Dar el Bahar</strong> fortress —
+            the Castle of the Sea — still standing on the cliff's edge above the crashing waves.
+          </p>
+          <br />
+          <p class="section-body">
+            The Saadian dynasty reclaimed the city in 1541, transforming it into a thriving
+            commercial hub. Its medina — one of Morocco's oldest continuously inhabited — retains
+            a labyrinthine character untouched by modern reconstruction, its lanes narrowing into
+            cool, shaded corridors of whitewashed walls and carved cedar doors.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ POTTERY ══ -->
+    <section class="section pottery-section">
+      <span class="section-label">The Living Craft</span>
+      <h2 class="section-title">The Colline des Potiers<br /><em>Hill of the Potters</em></h2>
+      <p class="section-body">
+        Safi's identity is inseparable from its clay. The Colline des Potiers — a hillside
+        neighbourhood of open workshops and wood-fired kilns — has operated continuously since
+        the 14th century. Visitors can watch masters shape raw earth on foot-powered wheels,
+        then trace the finished pieces to their final resting places: market stalls, Moroccan
+        riads, and tables across five continents.
+      </p>
+      <p class="section-body" style="margin-top:16px;">
+        Safi ceramics are recognisable by their bold palette — deep cobalt blues, earthy ochres,
+        and forest greens — applied with geometric precision. Each workshop carries its own
+        signature motifs, secrets passed down from father to son across countless generations.
+      </p>
+
+      <div class="pottery-grid">
+        <div class="pottery-cell">
+          <img
+            src="https://c8.alamy.com/comp/MM3DM2/main-pottery-ceramics-souq-medina-safi-morocco-northern-africa-MM3DM2.jpg"
+            alt="Pottery workshop in Safi"
+          />
+          <div class="pottery-cell-label">The Workshop</div>
+        </div>
+        <div class="pottery-cell">
+          <img
+            src="https://www.gobyava.com/wp-content/uploads/2019/05/Shane-Alburquerque-1050x525.jpeg"
+            alt="Finished Safi ceramics"
+            onerror="this.src='https://images.unsplash.com/photo-1612969308146-066d55f37ccb?q=80&w=600'"
+          />
+          <div class="pottery-cell-label">The Glaze</div>
+        </div>
+        <div class="pottery-cell">
+          <img
+            src="https://thumbs.dreamstime.com/b/belles-poteries-en-safi-city-au-maroc-la-po%C3%A9sie-est-une-tradition-culturelle-vivante-des-po%C3%A8tes-locaux-se-rassemblent-dans-319711211.jpg"
+            alt="Moroccan ceramic patterns"
+          />
+          <div class="pottery-cell-label">The Pattern</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ QUOTE ══ -->
+    <section class="quote-section">
+      <span class="quote-mark">"</span>
+      <blockquote>
+        Safi smells of salt and smoke — of the sea that crashes against its ramparts
+        and the kilns that have never gone cold.
+      </blockquote>
+      <span class="quote-attr">— A traveller's account, Safi medina</span>
+    </section>
+
+   <!-- ══ BEACHES ══ -->
+    <section class="section landmarks-section">
+      <span class="section-label">The Coast</span>
+      <h2 class="section-title">Beaches of <em>Safi</em></h2>
+      <p class="section-body">
+        Safi's Atlantic coastline stretches for kilometres of wild, sun-bleached shore. From city beaches alive with fishing boats to hidden cliffside coves, each spot has its own character.
+      </p>
+
+      <div class="landmarks-grid">
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800" alt="Plage Safi" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">01</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Plage Safi</div>
+              <p class="landmark-desc">
+                The main city beach, stretching just north of the old medina walls. A long sandy arc where local families gather at dusk, fishermen drag their nets ashore at dawn, and surfers ride the consistent Atlantic swell. Simple cafés serve mint tea and grilled sardines steps from the water.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=800" alt="Lalla Fatna" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">02</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Lalla Fatna</div>
+              <p class="landmark-desc">
+                Probably the most celebrated beach near Safi. Sheltered by dramatic golden cliffs, Lalla Fatna is ideal for swimming and surfing alike. The waves roll in with regularity, and the sunsets here — framed by the clifftops — are among the finest on the Atlantic coast.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1520520731457-9283dd14aa66?q=80&w=800" alt="Cap Beddouza" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">03</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Cap Beddouza</div>
+              <p class="landmark-desc">
+                Located roughly 30 km north of Safi, this wild stretch of golden sand unfolds at the foot of a dramatic promontory crowned by a white lighthouse. Uncrowded and largely untouched, the cape is a paradise for solitude seekers and photographers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=800" alt="Kram Dif" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">04</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Kram Dif</div>
+              <p class="landmark-desc">
+                A rugged cove beloved by locals and little known to passing travellers. Kram Dif's rocky shoreline creates natural tide pools alive with sea creatures, and the surrounding cliffs offer excellent vantage points over the Atlantic. Best visited at low tide.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?q=80&w=800" alt="Bedoza" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">05</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Bedoza</div>
+              <p class="landmark-desc">
+                A tranquil, less-visited beach with clear water and a wild, unspoiled setting. Bedoza draws those looking to escape the city's energy — a place for long walks along the shoreline and the rare pleasure of having an Atlantic beach almost entirely to yourself.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800" alt="Walidiya" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">06</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Walidiya</div>
+              <p class="landmark-desc">
+                A peaceful stretch south of Safi where the coast softens and the pace slows. Walidiya's wide sands face due west, making it one of the best beaches in the region for watching the sun drop into the Atlantic. A favourite among local families for weekend outings and evening walks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1507041957456-9c397ce39c97?q=80&w=800" alt="Souiria Lakdima" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">07</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Souiria Lakdima</div>
+              <p class="landmark-desc">
+                Located 36 km south of Safi, this expansive beach is considered the most active in the region. Consistent trade winds make it ideal for kitesurfing and windsurfing, while its fine sand and clear waters attract families and swimmers year-round.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1540202404-a2f29016b523?q=80&w=800" alt="Oualidia" />
+          <div class="landmark-card-body">
+            <span class="landmark-number">08</span>
+            <div class="landmark-info">
+              <div class="landmark-name">Oualidia</div>
+              <p class="landmark-desc">
+                Around 80 km north of Safi, Oualidia is one of Morocco's most beautiful coastal secrets. A sandbar separates the wild Atlantic from a calm lagoon perfect for swimming and kayaking. The surrounding oyster farms make it the finest spot on the coast to eat fresh shellfish by the water's edge.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ CUISINE ══ -->
+    <section class="section">
+      <div class="cuisine-layout">
+        <div>
+          <span class="section-label">On the Table</span>
+          <h2 class="section-title">The Flavours<br />of <em>the Atlantic</em></h2>
+          <p class="section-body">
+            Safi's cuisine is shaped by the sea. With the world's largest sardine
+            fleet at its doorstep, the city's tables are laden with the freshest
+            Atlantic catch, prepared with Moroccan spices and charcoal smoke.
+          </p>
+          <div class="cuisine-list">
+            <div class="cuisine-item">
+              <span class="cuisine-emoji">🐟</span>
+              <div>
+                <div class="cuisine-name">Grilled Sardines</div>
+                <p class="cuisine-desc">
+                  Safi's flagship dish. Split, seasoned with chermoula, and grilled
+                  over open charcoal by the harbour. Best eaten hot, with fresh bread
+                  and harissa.
+                </p>
+              </div>
+            </div>
+            <div class="cuisine-item">
+              <span class="cuisine-emoji">🦐</span>
+              <div>
+                <div class="cuisine-name">M'qila dial L'hout</div>
+                <p class="cuisine-desc">
+                  A Safi classic — a generous pan of shrimp, calamari, and seasonal
+                  seafood sautéed in olive oil with garlic, saffron, and a secret blend
+                  of local spices. Rich, fragrant, and deeply satisfying.
+                </p>
+              </div>
+            </div>
+            <div class="cuisine-item">
+              <span class="cuisine-emoji">🍪</span>
+              <div>
+                <div class="cuisine-name">Kaak de Safi</div>
+                <p class="cuisine-desc">
+                  The beloved biscuit of Safi, known across Morocco. Lightly spiced with
+                  anise and sesame, baked golden and crisp — a staple of every Safi
+                  household and a souvenir worth bringing home.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div class="cuisine-image" style="flex:1; height:270px;">
+            <img
+              src="https://www.lavachequiritlight.ma/rsrc/img_home_listing_top/cns_167.jpg"
+              alt="M'qila dial L'hout — Safi seafood"
+            />
+          </div>
+          <div class="cuisine-image" style="flex:1; height:5em">
+            <img
+              src="data/m9ila.jpg"
+              alt="Kaak de Safi"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ VISIT INFO ══ -->
+    <section class="visit-section">
+      <div class="visit-col">
+        <h3 class="visit-title">Plan Your<br />Visit</h3>
+        <div class="visit-item">
+          <span class="visit-icon">📍</span>
+          <div class="visit-info">
+            <div class="visit-label">Getting There</div>
+            <p class="visit-text">
+              Safi is 280 km south of Casablanca on the N1 coastal road. Buses depart
+              daily from CTM stations in Casablanca and Marrakech. The drive along the
+              Atlantic coast is spectacular.
+            </p>
+          </div>
+        </div>
+        <div class="visit-item">
+          <span class="visit-icon">🌤️</span>
+          <div class="visit-info">
+            <div class="visit-label">Best Season</div>
+            <p class="visit-text">
+              Spring (March–May) and autumn (September–November) offer mild Atlantic
+              weather. Surfers prefer November–March for the biggest swells at La Cathédrale.
+            </p>
+          </div>
+        </div>
+        <div class="visit-item">
+          <span class="visit-icon">⏱️</span>
+          <div class="visit-info">
+            <div class="visit-label">Recommended Stay</div>
+            <p class="visit-text">
+              2–3 days to explore the pottery hill, fortress, medina, and coastline
+              at a relaxed pace — and have time to commission a ceramic piece from the potters.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="visit-col">
+        <h3 class="visit-title">Traveller's<br />Tips</h3>
+        <div class="visit-item">
+          <span class="visit-icon">🏺</span>
+          <div class="visit-info">
+            <div class="visit-label">Buy Directly from the Potters</div>
+            <p class="visit-text">
+              Walk uphill past the National Ceramics Museum to the working workshops.
+              Pieces bought directly from artisans are a fraction of medina shop prices
+              and carry a more personal story.
+            </p>
+          </div>
+        </div>
+        <div class="visit-item">
+          <span class="visit-icon">🌅</span>
+          <div class="visit-info">
+            <div class="visit-label">Watch the Sunset from the Ramparts</div>
+            <p class="visit-text">
+              Climb to the upper terraces of Dar el Bahar in the late afternoon. The
+              Atlantic turns gold, fishing boats return to harbour, and the call to prayer
+              drifts from the medina below.
+            </p>
+          </div>
+        </div>
+        <div class="visit-item">
+          <span class="visit-icon">🍽️</span>
+          <div class="visit-info">
+            <div class="visit-label">Eat at the Harbour</div>
+            <p class="visit-text">
+              The informal grills lining the fishing port serve the freshest sardines in
+              Morocco, caught hours before they are placed on the coals in front of you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA ══ -->
+    <section class="cta-section">
+      <a href="meddina.html" class="cta-back">← Explore Other Cities</a>
+      <p class="cta-note">Part of the Dar Al-Thaqafa cultural project</p>
+    </section>
+
+    <script>
+      // Parallax hero image
+      const heroImg = document.getElementById("heroImg");
+      heroImg.classList.add("loaded");
+
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY;
+        heroImg.style.transform = `translateY(${y * 0.35}px)`;
+      });
+    </script>
+  </body>
+</html>
