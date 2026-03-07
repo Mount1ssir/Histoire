@@ -1,0 +1,152 @@
+/* Core Variables */
+:root {
+  --terracotta: #e2725b;
+  --teal: #006a4e;
+  --sand: #f4a460;
+  --cream: #fbf5ec;
+  --dark: #1a0f0a;
+  --light-teal: #0a9070;
+  
+  --bg-dark: #0b1a14;
+  --text-light: #fefae0;
+  --accent-gold: #d4a373;
+  --primary-clay: #bc6c25;
+  
+  --moroccan-blue: #0047ab;
+}
+
+/* Global Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--cream);
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+.grain-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ─── GLOBAL NAV ─── */
+.global-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  background: rgba(251, 245, 236, 0.85); /* Cream */
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 114, 91, 0.15); /* Terracotta */
+  transition: all 0.4s ease;
+}
+
+body.home-page .global-nav {
+  background: transparent;
+  border-bottom: none;
+}
+body.home-page .global-nav.scrolled {
+  background: rgba(251, 245, 236, 0.85);
+  border-bottom: 1px solid rgba(226, 114, 91, 0.15);
+}
+
+body.dark-theme .global-nav {
+  background: rgba(11, 26, 20, 0.85); /* Dark bg */
+  border-bottom: 1px solid rgba(212, 163, 115, 0.15); /* Gold */
+}
+
+body.game-theme .global-nav {
+  background: rgba(253, 252, 251, 0.9);
+  border-bottom: 1px solid rgba(0, 71, 171, 0.15);
+}
+
+.nav-logo {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+body.dark-theme .nav-logo {
+  color: var(--accent-gold);
+}
+body.game-theme .nav-logo {
+  color: var(--moroccan-blue);
+}
+
+.nav-logo span {
+  color: var(--terracotta);
+}
+body.dark-theme .nav-logo span {
+  color: var(--text-light);
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dark);
+  opacity: 0.7;
+  transition: opacity 0.2s, color 0.2s;
+}
+body.dark-theme .nav-links a {
+  color: var(--text-light);
+}
+
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--terracotta);
+}
+body.dark-theme .nav-links a:hover {
+  color: var(--accent-gold);
+}
+
+.nav-spacer {
+  height: 80px;
+}
+body.home-page .nav-spacer {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .global-nav {
+    padding: 20px 24px;
+  }
+  .nav-links li:not(.mobile-show) {
+    display: none;
+  }
+}
