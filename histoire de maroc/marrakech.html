@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marrakech — The Red City | Dar Al-Thaqafa</title>
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Page-specific variables to match Marrakech's terracotta tones */
+      :root {
+        --bg-dark: #120b08; /* Deep warm dark */
+        --clay:    #c44b2d; /* Redder clay for Marrakech */
+        --gold:    #d4a373;
+        --cream:   #fefae0;
+        --teal:    #1b4332;
+      }
+
+      /* ── BACK NAV ── */
+      .back-nav {
+        position: fixed;
+        top: 30px;
+        left: 44px;
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--gold);
+        font-family: "Jost", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        transition: opacity 0.3s, gap 0.3s;
+      }
+      .back-nav:hover { opacity: 1; gap: 16px; }
+      .back-nav::before { content: "←"; font-size: 0.95rem; }
+
+      /* ── HERO ── */
+      .hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+      }
+
+      .hero-img {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(18,11,8,0.95) 0%, rgba(18,11,8,0.35) 55%, rgba(18,11,8,0.1) 100%),
+          url("https://images.unsplash.com/photo-1597212618440-806262de4f6b?q=80&w=2000") center/cover no-repeat;
+        transform: scale(1.04);
+        transition: transform 8s ease;
+      }
+
+      .hero-img.loaded { transform: scale(1); }
+
+      /* Moroccan arch decorative ring */
+      .hero-arch {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        border: 1px solid rgba(212,163,115,0.1);
+        pointer-events: none;
+      }
+      .hero-arch::before {
+        content: "";
+        position: absolute;
+        inset: 30px;
+        border-radius: 50%;
+        border: 1px solid rgba(212,163,115,0.07);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 10;
+        padding: 0 10% 80px;
+        max-width: 800px;
+      }
+
+      .hero-tag {
+        display: inline-block;
+        font-family: "Jost", sans-serif;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold);
+        border: 1px solid rgba(212,163,115,0.4);
+        padding: 6px 18px;
+        border-radius: 40px;
+        margin-bottom: 22px;
+        backdrop-filter: blur(6px);
+        background: rgba(0,0,0,0.2);
+      }
+
+      .hero-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.5rem, 8vw, 7rem);
+        font-weight: 300;
+        line-height: 1.05;
+        color: #fff;
+        margin-bottom: 24px;
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold);
+      }
+
+      .hero-tagline {
+        font-family: "Jost", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.8;
+        max-width: 500px;
+        letter-spacing: 0.03em;
+      }
+
+      /* ── SECTION SHARED ── */
+      .section {
+        padding: 120px 10%;
+        border-bottom: 1px solid rgba(212,163,115,0.08);
+      }
+
+      .section-label {
+        font-family: "Jost", sans-serif;
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--clay);
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        font-weight: 400;
+        color: #fff;
+        line-height: 1.15;
+        margin-bottom: 30px;
+      }
+
+      .section-title em { color: var(--gold); font-style: italic; }
+
+      .section-body {
+        font-family: "Jost", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 300;
+        line-height: 2;
+        color: rgba(254,250,224,0.8);
+        max-width: 640px;
+      }
+
+      /* ── FACTS STRIP ── */
+      .facts-strip {
+        padding: 80px 10%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+        border-bottom: 1px solid rgba(212,163,115,0.08);
+      }
+
+      .fact-item {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 30px;
+        border: 1px solid rgba(212,163,115,0.12);
+        border-radius: 4px;
+        background: rgba(255,255,255,0.015);
+        transition: all 0.3s;
+      }
+
+      .fact-item:hover {
+        border-color: rgba(212,163,115,0.3);
+        background: rgba(212,163,115,0.04);
+      }
+
+      .fact-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3rem;
+        font-weight: 300;
+        color: var(--gold);
+        line-height: 1;
+      }
+
+      .fact-label {
+        font-family: "Jost", sans-serif;
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: rgba(254,250,224,0.6);
+        text-transform: uppercase;
+        line-height: 1.5;
+      }
+
+      /* ── HISTORY LAYOUT ── */
+      .history-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .history-image {
+        position: relative;
+        height: 600px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .history-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: sepia(20%) contrast(110%);
+        transition: transform 1.2s ease;
+      }
+
+      .history-image:hover img { transform: scale(1.06); }
+
+      /* ── LANDMARKS GRID ── */
+      .landmarks-grid {
+        margin-top: 60px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1px;
+        background: rgba(212,163,115,0.08);
+        border: 1px solid rgba(212,163,115,0.08);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .landmark-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-dark);
+        transition: background 0.3s;
+        overflow: hidden;
+      }
+
+      .landmark-card:hover { background: rgba(212,163,115,0.04); }
+
+      .landmark-card-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        filter: contrast(105%) saturate(115%);
+        transition: transform 0.9s ease;
+      }
+
+      .landmark-card:hover .landmark-card-img { transform: scale(1.05); }
+
+      .landmark-card-body {
+        padding: 30px 40px;
+      }
+
+      .landmark-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .landmark-desc {
+        font-family: "Jost", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 300;
+        line-height: 1.8;
+        color: rgba(254,250,224,0.7);
+      }
+
+      /* ── QUOTE ── */
+      .quote-section {
+        padding: 100px 10%;
+        text-align: center;
+      }
+      blockquote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-style: italic;
+        color: var(--cream);
+        max-width: 800px;
+        margin: 0 auto 20px;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 1024px) {
+        .history-layout { grid-template-columns: 1fr; gap: 50px; }
+        .facts-strip { grid-template-columns: repeat(2, 1fr); }
+        .landmarks-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 640px) {
+        .facts-strip { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <a href="meddina.html" class="back-nav">Our Lands</a>
+
+    <section class="hero">
+      <div class="hero-img" id="heroImg"></div>
+      <div class="hero-arch"></div>
+      <div class="hero-content reveal">
+        <span class="hero-tag">High Atlas Foothills</span>
+        <h1 class="hero-title">Marrakech<br /><em>The Red City</em></h1>
+        <p class="hero-tagline">
+          A sensory masterpiece of ochre walls, echoing souks, and hidden courtyard gardens. Marrakech is where ancient trade routes meet infinite vibrant energy.
+        </p>
+      </div>
+    </section>
+
+    <div class="facts-strip reveal">
+      <div class="fact-item">
+        <span class="fact-icon">🏰</span>
+        <span class="fact-num">1062</span>
+        <span class="fact-label">The year the city was founded by the Almoravid dynasty</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">🧱</span>
+        <span class="fact-num">19 km</span>
+        <span class="fact-label">Length of the ancient pisé (rammed earth) walls surrounding the Medina</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">☀️</span>
+        <span class="fact-num">300+</span>
+        <span class="fact-label">Days of pure sunshine illuminating the city every year</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-icon">🥁</span>
+        <span class="fact-num">1</span>
+        <span class="fact-label">Jemaa el-Fnaa is the first ever UNESCO Masterpiece of Oral Heritage</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="history-layout reveal">
+        <div class="history-image">
+          <img src="https://images.unsplash.com/photo-1538965646193-47963d3dbdb1?q=80&w=1200" alt="Medina Alleys" />
+        </div>
+        <div>
+          <span class="section-label">Heritage</span>
+          <h2 class="section-title">An Empire built on<br /><em>Ochre Earth</em></h2>
+          <p class="section-body">
+            Founded in the 11th century by Abu Bakr ibn Umar, Marrakech quickly grew into a powerful imperial capital. The city's signature red hue comes from the tabia (rammed earth) used to construct its imposing ramparts and buildings, designed to glow like embers in the setting sun.
+          </p>
+          <br />
+          <p class="section-body">
+            Through the centuries, Saadian sultans and wealthy viziers embellished the city with lavish palaces, intricate zellige tilework, and sprawling gardens, creating an oasis of luxury at the edge of the harsh desert terrain.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section reveal">
+      <blockquote>
+        "Marrakech is simply the nicest place on Earth to spend an afternoon."
+      </blockquote>
+      <span class="fact-label">— Winston Churchill</span>
+    </section>
+
+    <section class="section">
+      <span class="section-label">Discover</span>
+      <h2 class="section-title">Monuments & <em>Magic</em></h2>
+      <p class="section-body">
+        Behind every unassuming wooden door in Marrakech lies a potential palace. Here are the unmissable cornerstones of the city.
+      </p>
+
+      <div class="landmarks-grid reveal">
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1549618174-fb9ed57ba908?q=80&w=800" alt="Jemaa el-Fnaa" />
+          <div class="landmark-card-body">
+            <h3 class="landmark-name">Jemaa el-Fnaa</h3>
+            <p class="landmark-desc">
+              The beating heart of Marrakech. By day, a vast market; by night, it transforms into a carnival of storytellers, musicians, acrobats, and sizzling food stalls.
+            </p>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=800" alt="Koutoubia Mosque" />
+          <div class="landmark-card-body">
+            <h3 class="landmark-name">Koutoubia Mosque</h3>
+            <p class="landmark-desc">
+              The spiritual compass of the city. Its magnificent 77-meter minaret is a masterpiece of Moorish architecture and inspired the Giralda in Seville.
+            </p>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1628383321590-bf37b8ffc150?q=80&w=800" alt="Jardin Majorelle" />
+          <div class="landmark-card-body">
+            <h3 class="landmark-name">Jardin Majorelle</h3>
+            <p class="landmark-desc">
+              A botanical sanctuary created by Jacques Majorelle and later restored by Yves Saint Laurent. Famous for its exotic plants and striking cobalt blue villa.
+            </p>
+          </div>
+        </div>
+
+        <div class="landmark-card">
+          <img class="landmark-card-img" src="https://images.unsplash.com/photo-1596720426673-e4e14294f061?q=80&w=800" alt="Bahia Palace" />
+          <div class="landmark-card-body">
+            <h3 class="landmark-name">Bahia Palace</h3>
+            <p class="landmark-desc">
+              A 19th-century masterpiece of Moroccan architecture. Its endless courtyards, intricate stucco, and cedar ceilings were designed to capture the essence of Islamic and Moroccan style.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="history-layout reveal">
+        <div>
+          <span class="section-label">Culinary Tradition</span>
+          <h2 class="section-title">The Legend of <br /><em>The Tanjia</em></h2>
+          <p class="section-body">
+            While Morocco is famous for the Tajine, Marrakech has its own unique culinary crown jewel: the <strong>Tanjia</strong>. 
+            <br><br>
+            Unlike other dishes cooked by women at home, the Tanjia is traditionally prepared by men. Chunks of beef or lamb are stuffed into a clay urn with preserved lemons, garlic, cumin, and saffron. The urn is sealed and taken to the local hammam (public bathhouse), where it is buried in the hot ashes of the furnace to slow-cook for 12 to 18 hours until the meat melts in the mouth.
+          </p>
+        </div>
+        <div class="history-image">
+          <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?q=80&w=1000" alt="Moroccan Cuisine" />
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const heroImg = document.getElementById("heroImg");
+      heroImg.classList.add("loaded");
+
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY;
+        heroImg.style.transform = `translateY(${y * 0.35}px)`;
+      });
+
+      // Reveal animations
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var elementTop = reveals[i].getBoundingClientRect().top;
+          var elementVisible = 100;
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+      window.addEventListener("scroll", reveal);
+      reveal(); 
+    </script>
+  </body>
+</html>

@@ -4,31 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Explore Our Cities - Dar Al-Thaqafa</title>
+    <link rel="stylesheet" href="global.css" />
     <style>
-      :root {
-        --primary-green: #1b4332;
-        --accent-gold: #d4a373;
-        --text-light: #fefae0;
-        --bg-dark: #0b1a14;
-      }
-
-      body {
-        margin: 0;
-        font-family: "Georgia", serif;
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-        overflow-x: hidden;
-      }
-
       /* Header Styling */
       header {
-        padding: 60px 5%;
+        padding: 140px 5% 60px;
         text-align: center;
         border-bottom: 1px solid rgba(212, 163, 115, 0.2);
       }
 
       h1 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         margin: 0;
         color: var(--accent-gold);
         letter-spacing: 2px;
@@ -57,6 +43,7 @@
       .city-image-container {
         flex: 1.2;
         height: 100%;
+        min-height: 80vh;
         overflow: hidden;
       }
 
@@ -65,6 +52,7 @@
         height: 100%;
         object-fit: cover;
         display: block;
+        filter: sepia(20%) contrast(110%);
         transition: transform 0.8s ease;
       }
 
@@ -87,6 +75,7 @@
         font-size: 0.9rem;
         margin-bottom: 15px;
         display: block;
+        font-family: "Jost", sans-serif;
       }
 
       .city-name {
@@ -100,6 +89,7 @@
         line-height: 1.8;
         margin-bottom: 30px;
         opacity: 0.9;
+        font-weight: 300;
       }
 
       .explore-btn {
@@ -112,6 +102,7 @@
         text-transform: uppercase;
         font-size: 0.8rem;
         letter-spacing: 2px;
+        font-family: "Jost", sans-serif;
       }
 
       .explore-btn:hover {
@@ -125,82 +116,216 @@
         .city-section:nth-child(even) {
           flex-direction: column;
         }
+        .city-image-container {
+          min-height: 50vh;
+          width: 100%;
+        }
         .city-content {
           padding: 40px 5%;
         }
         .city-name {
-          font-size: 2.5rem;
+          font-size: 3rem;
         }
       }
     </style>
   </head>
   <body>
-    <header>
+    <nav id="navbar" class="global-nav">
+      <a href="home.html" class="nav-logo">Dar<span>.</span>Al-Thaqafa</a>
+      <ul class="nav-links">
+        <li><a href="meddina.html">Our Lands</a></li>
+        <li><a href="trad.html">Traditions</a></li>
+        <li><a href="firstgame.html">Games</a></li>
+      </ul>
+    </nav>
+
+    <header class="reveal">
       <h1>Explore Our Lands</h1>
       <p class="subtitle">A journey through the heart of the Kingdom</p>
     </header>
 
-    <section class="city-section">
+    <section class="city-section reveal">
       <div class="city-image-container">
-        <img
-          src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=1200"
-          alt="Tiznit"
-        />
+        <img src="https://images.unsplash.com/photo-1597212618440-806262de4f6b?q=80&w=1200" alt="Marrakech" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Red City</span>
+        <h2 class="city-name">Marrakech</h2>
+        <p class="city-description">
+          A vibrant city of bustling souks, lush gardens like the Majorelle, and historic palaces. Marrakech is the pulsing heart of Moroccan tourism, offering an intoxicating blend of spices, colors, and sounds beneath the shadow of the Koutoubia Mosque.
+        </p>
+        <a href="marrakech.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/University_karaouiyine_fes.jpg/330px-University_karaouiyine_fes.jpg" alt="Fes" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Spiritual Capital</span>
+        <h2 class="city-name">Fes</h2>
+        <p class="city-description">
+          Home to the oldest continuously functioning university in the world, Fes is a living museum. Its ancient medina, Fes el-Bali, is a car-free labyrinth of medieval alleys, ancient tanneries, and breathtaking Islamic architecture.
+        </p>
+        <a href="fes.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://images.unsplash.com/photo-1598022124758-26d09adcb7b6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Rabat" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The City of Light</span>
+        <h2 class="city-name">Rabat</h2>
+        <p class="city-description">
+          Morocco’s capital elegantly bridges the ancient and the modern. Overlooking the Atlantic, Rabat is home to the majestic Hassan Tower, the blue-and-white alleys of the Kasbah of the Udayas, and sweeping boulevards lined with palm trees.
+        </p>
+        <a href="rabat.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://plus.unsplash.com/premium_photo-1697729733847-0ed51661e005?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chefchaouen" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Blue Pearl</span>
+        <h2 class="city-name">Chefchaouen</h2>
+        <p class="city-description">
+          Nestled in the Rif Mountains, Chefchaouen is world-famous for its striking blue-washed streets. It offers a calm, relaxed atmosphere, steep cobbled lanes, and unique local crafts unlike anywhere else in the Kingdom.
+        </p>
+        <a href="chefchaouen.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://images.unsplash.com/photo-1533501747004-381b96042e88?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tangier" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Gateway to Africa</span>
+        <h2 class="city-name">Tangier</h2>
+        <p class="city-description">
+          Guarding the Strait of Gibraltar, Tangier has long been a magnet for writers, artists, and dreamers. Its unique international history blends Moroccan, Spanish, and French influences, creating an alluring coastal city with a bohemian soul.
+        </p>
+        <a href="tangier.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://plus.unsplash.com/premium_photo-1697730007162-3acd986a87f6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Essaouira" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Windy City</span>
+        <h2 class="city-name">Essaouira</h2>
+        <p class="city-description">
+          A fortified coastal town renowned for its strong trade winds, historic brass cannons, and rich musical heritage. Once a major seaport, Essaouira today is a laid-back sanctuary of art, Gnaoua music, and stunning ocean views.
+        </p>
+        <a href="essaouria.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://www.revigorate.com/images/authentic-views-of-meknes.jpg" alt="Meknes" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Imperial City</span>
+        <h2 class="city-name">Meknes</h2>
+        <p class="city-description">
+          Often called the Versailles of Morocco, Meknes was shaped by the grand vision of Sultan Moulay Ismail. It features monumental gates like Bab Mansour, sprawling royal stables, and a quieter, more intimate medina than its neighbor, Fes.
+        </p>
+        <a href="meknes.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://images.unsplash.com/photo-1577147443647-81856d5151af?q=80&w=1200" alt="Casablanca" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The White City</span>
+        <h2 class="city-name">Casablanca</h2>
+        <p class="city-description">
+          Morocco's economic engine and largest metropolis. While famous for its modern skyline and French Art Deco architecture, its true crown jewel is the magnificent Hassan II Mosque, a masterclass of craftsmanship built partially over the sea.
+        </p>
+        <a href="casa.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://desertsoultravel.com/wp-content/uploads/2025/08/AdobeStock_789968553-scaled.jpeg" alt="Ouarzazate" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">The Door of the Desert</span>
+        <h2 class="city-name">Ouarzazate</h2>
+        <p class="city-description">
+          Set against the dramatic backdrop of the High Atlas Mountains, Ouarzazate is a city of stunning earthen kasbahs. It has gained international fame as the "Hollywood of Africa," serving as the cinematic backdrop for countless cinematic epics.
+        </p>
+        <a href="ouarzazate" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://d3o72543l3jndj.cloudfront.net/fit-in/1200x1200/filters:format(jpeg)/patrol/aria/yI7dc7BH1tLBu6Q" alt="Safi" />
+      </div>
+      <div class="city-content">
+        <span class="city-tag">City of Potters</span>
+        <h2 class="city-name">Safi</h2>
+        <p class="city-description">
+          Perched on the Atlantic coast, Safi is Morocco's ancient city of clay and fire. Its hillside pottery quarter fills the air with the scent of kilns burning since the 16th century. Here, master craftsmen shape earth into art.
+        </p>
+        <a href="safi.html" class="explore-btn">Discover More</a>
+      </div>
+    </section>
+    
+    <section class="city-section reveal">
+      <div class="city-image-container">
+        <img src="https://images.unsplash.com/photo-1539020140153-e479b8c22e70?q=80&w=1200" alt="Tiznit" />
       </div>
       <div class="city-content">
         <span class="city-tag">The Silver City</span>
         <h2 class="city-name">Tiznit</h2>
         <p class="city-description">
-          Famed for its silver jewelry and ancient ramparts, Tiznit offers a
-          quiet, authentic look at Moroccan craftsmanship. The city's red-walled
-          medina is a labyrinth of tradition where every piece of silver tells a
-          story of Berber heritage.
+          Famed for its silver jewelry and ancient ramparts, Tiznit offers a quiet, authentic look at Moroccan craftsmanship. The city's red-walled medina is a labyrinth of tradition where every piece of silver tells a story of Berber heritage.
         </p>
-        <a href="villes/tiznit.html" class="explore-btn">Discover More</a>
+        <a href="tiznit.html" class="explore-btn">Discover More</a>
       </div>
     </section>
 
-    <section class="city-section">
+    <section class="city-section reveal">
       <div class="city-image-container">
-        <img
-          src="https://d3o72543l3jndj.cloudfront.net/fit-in/1200x1200/filters:format(jpeg)/patrol/aria/yI7dc7BH1tLBu6Q"
-          alt="Safi"
-        />
-      </div>
-      <div class="city-content">
-        <span class="city-tag">The Blue Pearl</span>
-        <h2 class="city-name">Safi</h2>
-        <p class="city-description">
-          Perched on the Atlantic coast, Safi is Morocco's ancient city of clay and fire.
-          Its hillside pottery quarter — the Colline des Potiers — fills the air with the
-          scent of kilns burning since the 16th century. Here, master craftsmen shape earth
-          into art, producing the vibrant ceramics that colour Moroccan tables across the world.
-        </p>
-        <a href="safi.html" class="explore-btn"
-          >Discover More</a
-        >
-      </div>
-    </section>
-
-    <section class="city-section">
-      <div class="city-image-container">
-        <img
-          src="https://media.istockphoto.com/photos/berber-camp-picture-id182251293?k=20&m=182251293&s=612x612&w=0&h=tI4r6nPvByRxC_wLIecqsj_Lu1tIL3ndl5kBYM1AjUM="
-          alt="Merzouga"
-        />
+        <img src="https://media.istockphoto.com/photos/berber-camp-picture-id182251293?k=20&m=182251293&s=612x612&w=0&h=tI4r6nPvByRxC_wLIecqsj_Lu1tIL3ndl5kBYM1AjUM=" alt="Merzouga" />
       </div>
       <div class="city-content">
         <span class="city-tag">The Sahara Gate</span>
         <h2 class="city-name">Merzouga</h2>
         <p class="city-description">
-          Where the road ends and the dunes of Erg Chebbi begin. Merzouga is the
-          gateway to the Sahara, offering golden sunrises, camel treks across
-          rolling sands, and nights spent under a blanket of infinite stars.
+          Where the road ends and the dunes of Erg Chebbi begin. Merzouga is the gateway to the Sahara, offering golden sunrises, camel treks across rolling sands, and nights spent under a blanket of infinite stars.
         </p>
-        <a href="https://en.wikipedia.org/wiki/Merzouga" class="explore-btn"
-          >Discover More</a
-        >
+        <a href="merzouga.html" target="_blank" class="explore-btn">Discover More</a>
       </div>
     </section>
+
+    <script>
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var elementTop = reveals[i].getBoundingClientRect().top;
+          var elementVisible = 100;
+          if (elementTop < windowHeight - elementVisible) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+      window.addEventListener("scroll", reveal);
+      reveal(); // Trigger on initial load
+    </script>
   </body>
 </html>

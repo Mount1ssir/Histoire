@@ -1,3 +1,6 @@
+/* Import Unified Premium Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap');
+
 /* Core Variables */
 :root {
   --terracotta: #e2725b;
@@ -29,14 +32,18 @@ html, body {
 }
 
 body {
-  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--cream);
-  color: var(--dark);
+  font-family: "Jost", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   overflow-x: hidden;
 }
 
+h1, h2, h3, h4, h5, .nav-logo {
+  font-family: "Cormorant Garamond", serif;
+}
+
 /* Grain texture overlay */
-.grain-overlay::before {
+body::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -59,50 +66,21 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 24px 48px;
-  background: rgba(251, 245, 236, 0.85); /* Cream */
+  background: rgba(11, 26, 20, 0.85); /* Dark bg */
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(226, 114, 91, 0.15); /* Terracotta */
+  border-bottom: 1px solid rgba(212, 163, 115, 0.15); /* Gold */
   transition: all 0.4s ease;
 }
 
-body.home-page .global-nav {
-  background: transparent;
-  border-bottom: none;
-}
-body.home-page .global-nav.scrolled {
-  background: rgba(251, 245, 236, 0.85);
-  border-bottom: 1px solid rgba(226, 114, 91, 0.15);
-}
-
-body.dark-theme .global-nav {
-  background: rgba(11, 26, 20, 0.85); /* Dark bg */
-  border-bottom: 1px solid rgba(212, 163, 115, 0.15); /* Gold */
-}
-
-body.game-theme .global-nav {
-  background: rgba(253, 252, 251, 0.9);
-  border-bottom: 1px solid rgba(0, 71, 171, 0.15);
-}
-
 .nav-logo {
-  font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--accent-gold);
   letter-spacing: 0.04em;
   text-decoration: none;
 }
-body.dark-theme .nav-logo {
-  color: var(--accent-gold);
-}
-body.game-theme .nav-logo {
-  color: var(--moroccan-blue);
-}
 
 .nav-logo span {
-  color: var(--terracotta);
-}
-body.dark-theme .nav-logo span {
   color: var(--text-light);
 }
 
@@ -115,38 +93,38 @@ body.dark-theme .nav-logo span {
 
 .nav-links a {
   text-decoration: none;
+  font-family: "Jost", sans-serif;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--dark);
+  color: var(--text-light);
   opacity: 0.7;
   transition: opacity 0.2s, color 0.2s;
-}
-body.dark-theme .nav-links a {
-  color: var(--text-light);
 }
 
 .nav-links a:hover {
   opacity: 1;
-  color: var(--terracotta);
-}
-body.dark-theme .nav-links a:hover {
   color: var(--accent-gold);
-}
-
-.nav-spacer {
-  height: 80px;
-}
-body.home-page .nav-spacer {
-  display: none;
 }
 
 @media (max-width: 768px) {
   .global-nav {
     padding: 20px 24px;
   }
-  .nav-links li:not(.mobile-show) {
+  .nav-links li {
     display: none;
   }
+}
+
+/* ─── SCROLL REVEAL ANIMATION ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
